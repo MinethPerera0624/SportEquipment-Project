@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - SPORTIFY Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">SPORTIFY</a>
+            </div>
+            <div class="nav-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Products ▼</button>
+                    <div class="dropdown-content">
+                        <a href="products.html?category=team">Team Sports</a>
+                        <a href="products.html?category=running">Running & Fitness</a>
+                        <a href="products.html?category=board">Board Games</a>
+                        <a href="products.html?category=athletic">Athletic Sports</a>
+                        <a href="products.html?category=racket">Racket Sports</a>
+                        <a href="products.html?category=others">Others</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="cart.html" class="nav-link cart-icon">🛒 Cart <span class="cart-count">0</span></a>
+                <a href="account.html" class="nav-link">👤 Account</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <h1>Shopping Cart</h1>
+
+        <div class="cart-container">
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+
+            <div class="cart-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">Rs.0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="shipping">Rs.0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax:</span>
+                    <span id="tax">Rs.0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">Rs.0.00</span>
+                </div>
+                <button class="btn btn-primary" onclick="checkOut()">Proceed to Checkout</button>
+                <a href="products.html" class="btn btn-secondary">Continue Shopping</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 SPORTYFY Store. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="aboutus.html">About Us</a>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+            <h2>Payment Method</h2>
+
+            <!-- Card Logos -->
+            <div class="card-icons">
+                <img src="https://img.icons8.com/clr-gls/1200/visa.jpg" alt="Visa">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5LLCKGiA1A54u5bl67CTTP8v9eaDQWTllIw&s"
+                    alt="MasterCard">
+                <img src="https://cdn-icons-png.flaticon.com/512/179/179431.png" alt="AmEx">
+                <img src="data:image/png;base64,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"
+                    alt="Maestro">
+            </div>
+
+            <!-- Card Form -->
+            <form class="card-form">
+                <div class="input-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="5•••• 8294 2379 6350" maxlength="19" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5" required>
+                        <span class="valid-icon">✔</span>
+                    </div>
+                    <div class="input-group">
+                        <label>CVC / CVV</label>
+                        <input type="text" placeholder="•••" maxlength="4" required>
+                        <span class="valid-icon">✔</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Name on Card</label>
+                    <input type="text" placeholder="Samanta Smith" required>
+                    <span class="valid-icon">✔</span>
+                </div>
+
+                <p class="secure-note">You may be directed to your bank's 3D secure process to authenticate your
+                    information.</p>
+
+                <button class="btn btn-primary pay-now" onclick="checkout()">Pay Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+</body>
+
+</html>
